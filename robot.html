@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>3D Robot</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.155.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <script type="module">
+      import * as THREE from "three";
+      import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+      import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+      import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+
+       const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x121416);
+
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 1000);
+    // Camera front view
+    camera.position.set(0, 4, 13);
+    camera.lookAt(0, 2, 0);
+
+    const renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    // Lights
+    const light1 = new THREE.DirectionalLight(0xffffff, 1.5);
+    light1.position.set(10, 10, 10);
+    scene.add(light1);
+
+    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambient);
+
+    // ============ Monitor ============
+
+    // Create canvas with code text
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 256;
+    const ctx = canvas.getContext('2d');
+
+    // Draw black border for monitor screen
+    ctx.fillStyle = 0x1b1b1b; // black border
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw inner blue screen (smaller than canvas for border effect)
+    const borderSize = 18;
+    ctx.fillStyle = '#001f3f'; // dark blue
+    ctx.fillRect(borderSize, borderSize, canvas.width - borderSize * 2, canvas.height - borderSize * 2);
+
+    // Draw code text
+    ctx.fillStyle = '#00ff00';
+    ctx.font = '28px monospace';
+    ctx.fillText('#include <stdio.h>', 38, 60);
+    ctx.fillText('int main() {', 38, 100);
+    ctx.fillText('  printf("Hello World");', 38, 140);
+    ctx.fillText('  return 0;', 38, 180);
+    ctx.fillText('}', 38, 220);
+
+    const texture = new THREE.CanvasTexture(canvas);
+
+    // Make materials array: blue screen only on front, black on all other sides
+    const blackMat = new THREE.MeshBasicMaterial({ color: 0x1b1b1b });
+    const monitorMaterials = [
+      blackMat, // right
+      blackMat, // left
+      blackMat, // top
+      blackMat, // bottom
+      new THREE.MeshBasicMaterial({ map: texture }), // front (blue screen)
+      blackMat  // back
+    ];
+
+    const monitor = new THREE.Mesh(
+      new THREE.BoxGeometry(4.5, 3, 0.2),
+      monitorMaterials
+    );
+    monitor.position.set(0, 3, 0);
+    scene.add(monitor);
+
+    // ============ Monitor Stand ============
+    // Make stand as thin as monitor border (borderSize = 18px on 512px canvas, so ~0.15/4.5 of monitor width)
+    const standMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
+    const stand = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.09, 0.09, 1.2), // was 0.15, now thinner
+      standMaterial
+    );
+    stand.position.set(0, 1.2, 0);
+    scene.add(stand);
+
+    const base = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.6, 0.6, 0.2), // radius increased from 0.36 to 0.6
+      standMaterial
+    );
+    base.position.set(0, 0.6, 0);
+    scene.add(base);
+
+    // ============ CPU ============
+    const cpuMaterial = new THREE.MeshStandardMaterial({ color: 0x222222 });
+    const cpu = new THREE.Mesh(new THREE.BoxGeometry(1, 3.5, 2), cpuMaterial);
+    cpu.position.set(-3.5, 2, 0);
+    scene.add(cpu);
+
+    // --- Add CPU Power Button (front side) ---
+const powerButtonFrontGeo = new THREE.CylinderGeometry(0.09, 0.09, 0.04, 32);
+const powerButtonFrontMat = new THREE.MeshStandardMaterial({ color: 0x444444, metalness: 0.7, roughness: 0.3 });
+const powerButtonFront = new THREE.Mesh(powerButtonFrontGeo, powerButtonFrontMat);
+powerButtonFront.rotation.x = Math.PI / 2;
+powerButtonFront.position.set(-3.0, 0.7, 0.98); // z=0.98 for front face
+scene.add(powerButtonFront);
+
+// --- Add CPU USB Ports (front side) ---
+for (let i = 0; i < 2; i++) {
+  const usbGeo = new THREE.BoxGeometry(0.18, 0.05, 0.04);
+  const usbMat = new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.8, roughness: 0.2 });
+  const usb = new THREE.Mesh(usbGeo, usbMat);
+  usb.position.set(-3.0, 0.45 - i * 0.12, 0.98); // z=0.98 for front face
+  scene.add(usb);
+}
+
+// --- Add CPU Indicator Lights (front side) ---
+const lightColorsFront = [0x00ff00, 0xff0000, 0xffff00]; // green, red, yellow
+for (let i = 0; i < 3; i++) {
+  const ledGeo = new THREE.SphereGeometry(0.04, 16, 16);
+  const ledMat = new THREE.MeshStandardMaterial({ color: lightColorsFront[i], emissive: lightColorsFront[i], emissiveIntensity: 0.7 });
+  const led = new THREE.Mesh(ledGeo, ledMat);
+  led.position.set(-3.0, 1.1 + i * 0.15, 0.98); // z=0.98 for front face
+  scene.add(led);
+}
+
+// --- Add CPU Vents (vertical lines, front side) ---
+for (let i = 0; i < 6; i++) {
+  const ventGeo = new THREE.BoxGeometry(0.01, 0.5, 0.04);
+  const ventMat = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.3, roughness: 0.7 });
+  const vent = new THREE.Mesh(ventGeo, ventMat);
+  vent.position.set(-3.0, 2.2 + i * 0.25, 0.98); // z=0.98 for front face
+  scene.add(vent);
+}
+
+    // ============ Keyboard ============
+    const keyboard = new THREE.Mesh(
+      new THREE.BoxGeometry(3.5, 0.2, 1.2),
+      new THREE.MeshStandardMaterial({ color: 0x111111 })
+    );
+    keyboard.position.set(0, 0.7, 2.2);
+    scene.add(keyboard);
+
+    // Add keyboard buttons (simple small boxes in a grid) with letters/symbols
+// Updated QWERTY-like layout with only one wide spacebar in the center
+const keyLabels = [
+  ['Esc', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'Del'],
+  ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'Bksp'],
+  ['Caps', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '\''],
+  ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', '↑'],
+  // Only one wide spacebar in the center, rest are empty for symmetry
+  ['', '', 'ctrl', 'alt', 'fn', 'Space', 'alt', 'ctrl', '<', '>', '', '']
+];
+
+// Key widths for each row (in multiples of keyWidth)
+const keyWidths = [
+  Array(12).fill(1), // Row 1: all normal
+  [1.3, ...Array(10).fill(1), 1.7], // Row 2: Tab and Bksp wider
+  [1.7, ...Array(9).fill(1), 1.3, 1.3], // Row 3: Caps and last two wider
+  [2, ...Array(9).fill(1), 1.3], // Row 4: Shift and last wider
+  [1, 1, 1, 1, 1, 6, 1, 1, 1, 1, 1, 1] // Row 5: Only one wide spacebar in the center
+];
+
+const keyRows = keyLabels.length;
+const keyCols = keyLabels[0].length;
+const keyWidth = 0.22;
+const keyHeight = 0.08;
+const keyDepth = 0.18;
+const keyGapX = 0.025;
+const keyGapZ = 0.03;
+
+// Calculate total width for centering
+function rowTotalWidth(row) {
+  return keyWidths[row].reduce((sum, w) => sum + w * keyWidth + keyGapX, -keyGapX);
+}
+
+const startZ = -((keyRows - 1) * (keyDepth + keyGapZ)) / 2;
+
+for (let row = 0; row < keyRows; row++) {
+  const totalWidth = rowTotalWidth(row);
+  let x = -totalWidth / 2 + keyWidths[row][0] * keyWidth / 2;
+  for (let col = 0; col < keyCols; col++) {
+    const label = keyLabels[row][col];
+    const width = keyWidths[row][col] * keyWidth;
+    if (label) {
+      const key = new THREE.Mesh(
+        new THREE.BoxGeometry(width, keyHeight, keyDepth),
+        new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.2, roughness: 0.7 })
+      );
+      key.position.set(
+        keyboard.position.x + x,
+        keyboard.position.y + 0.15,
+        keyboard.position.z + startZ + row * (keyDepth + keyGapZ)
+      );
+      scene.add(key);
+
+      // Add label on key (using canvas texture)
+      const keyCanvas = document.createElement('canvas');
+      keyCanvas.width = 128;
+      keyCanvas.height = 64;
+      const keyCtx = keyCanvas.getContext('2d');
+      keyCtx.fillStyle = '#111';
+      keyCtx.fillRect(0, 0, 128, 64);
+      keyCtx.font = label === 'Space' ? 'bold 28px monospace' : 'bold 32px monospace';
+      keyCtx.fillStyle = '#fff';
+      keyCtx.textAlign = 'center';
+      keyCtx.textBaseline = 'middle';
+      keyCtx.fillText(label === 'Space' ? '' : label, 64, 36);
+
+      const keyTexture = new THREE.CanvasTexture(keyCanvas);
+      keyTexture.needsUpdate = true;
+
+      // Only apply label to the top face (index 2 for BoxGeometry)
+      key.material = [
+        key.material, // right
+        key.material, // left
+        key.material, // top
+        key.material, // bottom
+        key.material, // front
+        key.material  // back
+      ];
+      key.material[2] = new THREE.MeshBasicMaterial({ map: keyTexture });
+
+      // For spacebar, make the key blank (no label)
+    }
+    // Move x for next key
+    x += keyWidths[row][col] * keyWidth / 2 + keyGapX + (col < keyCols - 1 ? keyWidths[row][col + 1] * keyWidth / 2 : 0);
+  }
+}
+
+    // ============ Table ============
+    
+
+    // ============ Table Legs (Perfect Placement) ============
+
+const legMaterial = new THREE.MeshStandardMaterial({ color: 0x5c3a1e });
+
+const legWidth = 0.3;
+const legHeight = 4; // height of each leg
+const tableTopY = 0.3; // table top center is at y = 0.3
+const tableBottomY = tableTopY - 0.3; // since table top height is 0.6
+
+// Legs should go from ground to tableBottomY, so place legs at half of legHeight
+const legCenterY = tableBottomY - legHeight / 2; // this is correct leg center
+
+const legPositions = [
+  [-5.7, legCenterY, -2.7], // front-left
+  [5.7, legCenterY, -2.7],  // front-right
+  [-5.7, legCenterY, 2.7],  // back-left
+  [5.7, legCenterY, 2.7],   // back-right
+];
+
+legPositions.forEach(pos => {
+  const leg = new THREE.Mesh(
+    new THREE.BoxGeometry(legWidth, legHeight, legWidth),
+    legMaterial
+  );
+  leg.position.set(...pos);
+  scene.add(leg);
+});
+
+    const table = new THREE.Mesh(new THREE.BoxGeometry(12, 0.6, 6), new THREE.MeshStandardMaterial({ color: 0x8B4513 }));
+    table.position.set(0, 0.3, 0);
+    scene.add(table);
+
+    // ============ Mouse ============
+    // Mouse body (oval/ellipse)
+    const mouseBodyGeo = new THREE.SphereGeometry(0.23, 32, 32);
+    mouseBodyGeo.scale(1, 0.45, 1.6); // Flatten and elongate
+    const mouseBodyMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.5, metalness: 0.2 });
+    const mouseBody = new THREE.Mesh(mouseBodyGeo, mouseBodyMat);
+    mouseBody.position.set(2.25, 0.6 + 0.11, 2.2); // टेबलवर, कपच्या उजवीकडे
+    scene.add(mouseBody);
+    // Left button
+    const leftBtnGeo = new THREE.BoxGeometry(0.09, 0.025, 0.28);
+    const leftBtnMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.4 });
+    const leftBtn = new THREE.Mesh(leftBtnGeo, leftBtnMat);
+    leftBtn.position.set(2.20, 0.6 + 0.15, 2.25);
+    scene.add(leftBtn);
+    // Right button
+    const rightBtn = new THREE.Mesh(leftBtnGeo, leftBtnMat);
+    rightBtn.position.set(2.30, 0.6 + 0.15, 2.25);
+    scene.add(rightBtn);
+    // Scroll wheel
+    const scrollGeo = new THREE.CylinderGeometry(0.018, 0.018, 0.07, 16);
+    const scrollMat = new THREE.MeshStandardMaterial({ color: 0x888888, roughness: 0.3 });
+    const scroll = new THREE.Mesh(scrollGeo, scrollMat);
+    scroll.rotation.z = Math.PI / 2;
+    scroll.position.set(2.25, 0.6 + 0.17, 2.32);
+    scene.add(scroll);
+
+    // ============ Coffee Mug (Improved) ============
+    // Mug body (tapered cylinder)
+    const mugTopRadius = 0.24;
+    const mugBottomRadius = 0.20;
+    const mugHeight = 0.42;
+    const mugRadialSegments = 48;
+    const mugBodyGeo = new THREE.CylinderGeometry(mugTopRadius, mugBottomRadius, mugHeight, mugRadialSegments, 1, false);
+    const mugBodyMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.25, metalness: 0.1, transmission: 0.1, thickness: 0.04 });
+    const mugBody = new THREE.Mesh(mugBodyGeo, mugBodyMat);
+    // Position: right of mouse, a distance away
+    mugBody.position.set(2.85, 0.6 + mugHeight/2, 2.2);
+    scene.add(mugBody);
+    // Mug rim (thin torus at top)
+    const rimGeo = new THREE.TorusGeometry(mugTopRadius + 0.01, 0.012, 24, 48);
+    const rimMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.18, metalness: 0.15 });
+    const rim = new THREE.Mesh(rimGeo, rimMat);
+    rim.position.set(2.85, 0.6 + mugHeight, 2.2);
+    rim.rotation.x = Math.PI / 2;
+    scene.add(rim);
+    // Coffee surface (disk inset from rim)
+    const coffeeGeo = new THREE.CircleGeometry(mugTopRadius - 0.015, 40);
+    const coffeeMat = new THREE.MeshStandardMaterial({ color: 0x6f4e37 });
+    const coffee = new THREE.Mesh(coffeeGeo, coffeeMat);
+    coffee.position.set(2.85, 0.6 + mugHeight - 0.012, 2.2);
+    coffee.rotation.x = -Math.PI / 2;
+    scene.add(coffee);
+    // Mug handle (custom C-shaped tube, more realistic, smaller and closer)
+    class MugHandleCurve extends THREE.Curve {
+      constructor() {
+        super();
+      }
+      getPoint(t) {
+        // Elliptical arc: t in [0,1], angle from -PI/2 to PI/2
+        const angle = Math.PI * (t - 0.5); // -PI/2 to PI/2
+        const a = 0.09; // horizontal radius (smaller)
+        const b = 0.14; // vertical radius (smaller)
+        // Offset to right side of mug (closer)
+        const x = 2.80 + mugTopRadius + 0.012 + a * Math.cos(angle);
+        const y = 0.6 + mugHeight/2 + b * Math.sin(angle);
+        const z = 2.2;
+        return new THREE.Vector3(x, y, z);
+      }
+    }
+    const handlePath = new MugHandleCurve();
+    const handleSegments = 48;
+    const handleTubeRadius = 0.028; // slightly thinner
+    const handleGeometry = new THREE.TubeGeometry(handlePath, handleSegments, handleTubeRadius, 16, false);
+    const handleMaterial = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.25, metalness: 0.1 });
+    const handle = new THREE.Mesh(handleGeometry, handleMaterial);
+    scene.add(handle);
+
+    // ============ 3D Text in Background (Programming Languages, Only Background) ============
+    const textMeshes = [];
+    const textVelocities = [];
+    // Bounds: X wide, Y above desk, Z far behind desk/computer
+    const scatterBounds = { x: [-18, 18], y: [-10, 10], z: [-30, -8] };
+    const fontLoader = new FontLoader();
+    fontLoader.load('https://cdn.jsdelivr.net/npm/three@0.155.0/examples/fonts/helvetiker_regular.typeface.json', function(font) {
+      const languages = [
+        'C','C++','C#','java','javascript','python','spring boot','react.js','DBMS','MySQL',
+        'PHP','HTML','CSS', 'microservices', 'spring security','JPA', 'OOP','DSA','AI','ML','DS',
+        'Web Development','Web Design','Web Application','Web Service','Web API','Web Framework',
+      ];
+      for (let i = 0; i < languages.length; i++) {
+        const lang = languages[i];
+        const textGeo = new TextGeometry(lang, {
+          font: font,
+          size: 0.9,
+          height: 0.18,
+          curveSegments: 8,
+          bevelEnabled: true,
+          bevelThickness: 0.04,
+          bevelSize: 0.02,
+          bevelOffset: 0,
+          bevelSegments: 2
+        });
+        const textMat = new THREE.MeshStandardMaterial({ color: 0x00eaff, metalness: 0.7, roughness: 0.3, emissive: 0x003344, emissiveIntensity: 0.5 });
+        const textMesh = new THREE.Mesh(textGeo, textMat);
+        // Random position in background bounds
+        textMesh.position.set(
+          Math.random() * (scatterBounds.x[1] - scatterBounds.x[0]) + scatterBounds.x[0],
+          Math.random() * (scatterBounds.y[1] - scatterBounds.y[0]) + scatterBounds.y[0],
+          Math.random() * (scatterBounds.z[1] - scatterBounds.z[0]) + scatterBounds.z[0]
+        );
+        // Random rotation
+        textMesh.rotation.y = Math.random() * Math.PI * 2;
+        scene.add(textMesh);
+        textMeshes.push(textMesh);
+        // Random velocity
+        textVelocities.push(new THREE.Vector3(
+          (Math.random() - 0.5) * 0.015,
+          (Math.random() - 0.5) * 0.015,
+          (Math.random() - 0.5) * 0.015
+        ));
+      }
+    });
+
+    // ============ Animate ============
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth/window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      // Animate RGB lights
+      if (window._rgbMats) {
+        const t = performance.now() * 0.001;
+        // Cycle through HSL for each strip
+        window._rgbMats[0].color.setHSL((t * 0.25) % 1, 1, 0.5); // left
+        window._rgbMats[0].emissive = window._rgbMats[0].color;
+        window._rgbMats[1].color.setHSL((t * 0.25 + 0.33) % 1, 1, 0.5); // right
+        window._rgbMats[1].emissive = window._rgbMats[1].color;
+        window._rgbMats[2].color.setHSL((t * 0.25 + 0.66) % 1, 1, 0.5); // wheel
+        window._rgbMats[2].emissive = window._rgbMats[2].color;
+      }
+      // Animate CPU RGB fans
+      if (window._fanRGBMats) {
+        const t = performance.now() * 0.001;
+        for (let i = 0; i < window._fanRGBMats.length; i++) {
+          const hue = (t * 0.18 + i * 0.33) % 1;
+          window._fanRGBMats[i].color.setHSL(hue, 1, 0.5);
+          window._fanRGBMats[i].emissive = window._fanRGBMats[i].color;
+        }
+      }
+      // Animate 3D text random movement
+      for (let i = 0; i < textMeshes.length; i++) {
+        const mesh = textMeshes[i];
+        const vel = textVelocities[i];
+        mesh.position.add(vel);
+        // Bounce within bounds
+        if (mesh.position.x < scatterBounds.x[0] || mesh.position.x > scatterBounds.x[1]) vel.x *= -1;
+        if (mesh.position.y < scatterBounds.y[0] || mesh.position.y > scatterBounds.y[1]) vel.y *= -1;
+        if (mesh.position.z < scatterBounds.z[0] || mesh.position.z > scatterBounds.z[1]) vel.z *= -1;
+      }
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    animate();
+    </script>
+  </body>
+</html>

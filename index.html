@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prashant Patil</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  </head>
+  <body>
+    <div
+      class="relative flex min-h-screen flex-col bg-[#121416] dark group/design-root overflow-x-hidden"
+      style="font-family: Manrope, 'Noto Sans', sans-serif"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <!-- Responsive Header (already responsive) -->
+        <header
+          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#2c3135] px-4 py-3 md:px-10"
+        >
+          <div class="flex items-center gap-2 text-white">
+            <div class="size-10">
+              
+              <img src="logo.svg" alt="logo" class="w-10 h-10">
+            </div>
+            <h2
+              class="text-white text-lg font-bold leading-tight tracking-[-0.015em]"
+            >
+              Prashant Patil
+            </h2>
+          </div>
+          <!-- Hamburger button for mobile -->
+          <button
+            id="nav-toggle"
+            class="md:hidden flex items-center px-2 py-1 text-white focus:outline-none"
+            aria-label="Open navigation"
+          >
+            <svg
+              class="w-7 h-7"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <!-- Navigation links -->
+          <div
+            id="nav-menu"
+            class="fixed inset-0 z-40 bg-[#121416] bg-opacity-95 flex-col items-center justify-center gap-8 transition-transform duration-200 transform translate-x-full md:static md:translate-x-0 md:bg-transparent md:flex md:flex-row md:relative md:gap-8 md:items-center md:justify-end md:w-auto hidden md:flex"
+          >
+            <div class="flex flex-col items-center gap-6 md:flex-row md:gap-9">
+              <a
+                class="text-white text-sm font-medium leading-normal"
+                href="#about"
+                >About</a
+              >
+              <a
+                class="text-white text-sm font-medium leading-normal"
+                href="#skills"
+                >Skills</a
+              >
+              <a
+                class="text-white text-sm font-medium leading-normal"
+                href="#projects"
+                >Projects</a
+              >
+              <a class="text-white text-sm font-medium leading-normal" href="#"
+                >Blogs</a
+              >
+              <a
+                class="text-white text-sm font-medium leading-normal"
+                href="#contact"
+                >Contact</a
+              >
+            </div>
+            <div
+              class="bg-center bg-no-repeat aspect-square bg-cover size-10 mt-8 md:mt-0 rounded-full"
+              style="
+                background-image: url('photo.jpg');
+                background-position: top;
+              "
+            ></div>
+          </div>
+        </header>
+        <!-- Responsive main content -->
+        <div
+          class="w-full px-4 sm:px-6 md:px-10 flex flex-1 justify-center py-5"
+        >
+          <div
+            class="layout-content-container flex flex-col w-full max-w-[960px] flex-1"
+          >
+            <div class="@container">
+              <div
+                class="flex flex-col gap-6 px-0 sm:px-4 py-10 md:gap-8 md:flex-row"
+              >
+                <div
+                  class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-xl md:h-auto md:min-w-[320px] md:w-1/2"
+                 
+                ><iframe
+    src="robot.html"
+    style="width:100%;height:100%;border:0;display:block"
+    allowfullscreen
+  ></iframe></div>
+                <div
+                  class="flex flex-col gap-6 md:min-w-[320px] md:gap-8 md:justify-center md:w-1/2"
+                >
+                  <div class="flex flex-col gap-2 text-left">
+                    <h1
+                      class="text-white text-2xl sm:text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em] bit-font"
+                    >
+                      Java Developer &amp; Programmer
+                    </h1>
+                    <h2
+                      class="text-white text-sm font-normal leading-normal md:text-base"
+                    >
+                      I am a passionate developer loves exploring new
+                      technologies, learning exciting things, and solving
+                      real-world problems with creative solutions. I enjoy
+                      growing every day through code and innovation.
+                    </h2>
+                  </div>
+                  <button
+                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 md:h-12 md:px-5 bg-[#dce8f3] text-[#121416] text-sm font-bold leading-normal tracking-[0.015em] md:text-base"
+                  >
+                    <span class="truncate">View Projects</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <h2
+              class="text-white text-xl sm:text-2xl font-bold leading-tight tracking-[-0.015em] px-2 sm:px-4 pb-3 pt-5"
+              id="about"
+            >
+              About Me
+            </h2>
+            <p
+              class="text-white text-base font-normal leading-normal pb-3 pt-1 px-2 sm:px-4"
+            >
+              I am Prashant Patil, a passionate and curious developer from
+              Jalgaon, Maharashtra, completed my B.E. in Computer Engineering at
+              SSBT COET. With a strong foundation in Java Full Stack Development
+              and hands-on experience in Spring Boot, Microservices, and secure
+              backend systems, I love building solutions that make an impact. I
+              enjoy exploring new technologies, learning continuously, and
+              solving real-world problems through code. My journey reflects a
+              blend of dedication, creativity, and a deep desire to grow in the
+              tech world.
+            </p>
+            <hr />
+            <h2
+              class="text-white text-xl sm:text-2xl font-bold leading-tight tracking-[-0.015em] px-2 sm:px-4 pb-3 pt-5"
+              id="skills"
+            >
+              Skills
+            </h2>
+            <!-- Replace your skills grid with this version for compact, pill-like, auto-width, responsive skill cards -->
+            <div
+              class="flex flex-wrap gap-3 p-2 sm:p-4 justify-start text-white"
+            >
+              <!-- Spring Boot -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-spring-original text-2xl"></i>
+                <span class="text-white text-base font-bold">Spring Boot</span>
+              </div>
+              <!-- Microservices -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1.5em"
+                  height="1.5em"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <rect x="2" y="2" width="8" height="8" rx="2" fill="#fff" />
+                  <rect x="14" y="2" width="8" height="8" rx="2" fill="#fff" />
+                  <rect x="2" y="14" width="8" height="8" rx="2" fill="#fff" />
+                  <rect x="14" y="14" width="8" height="8" rx="2" fill="#fff" />
+                </svg>
+                <span class="text-white text-base font-bold"
+                  >Microservices</span
+                >
+              </div>
+              <!-- Git -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-git-plain text-2xl"></i>
+                <span class="text-white text-base font-bold">Git</span>
+              </div>
+              <!-- GitHub -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-github-plain text-2xl"></i>
+                <span class="text-white text-base font-bold">GitHub</span>
+              </div>
+              <!-- Spring Security -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1.5em"
+                  height="1.5em"
+                  fill="currentColor"
+                  viewBox="0 0 256 256"
+                >
+                  <path
+                    d="M208,40H48A16,16,0,0,0,32,56v58.78c0,89.61,75.82,119.34,91,124.39a15.53,15.53,0,0,0,10,0c15.2-5.05,91-34.78,91-124.39V56A16,16,0,0,0,208,40Zm0,74.79c0,78.42-66.35,104.62-80,109.18-13.53-4.51-80-30.69-80-109.18V56H208ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.68l50.34-50.34a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"
+                  />
+                </svg>
+                <span class="text-white text-base font-bold"
+                  >Spring Security</span
+                >
+              </div>
+              <!-- DSA -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1.5em"
+                  height="1.5em"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 2L2 7l10 5 10-5-10-5zm0 7.5l-10 5 10 5 10-5-10-5zm0 7.5l-10 5 10 5 10-5-10-5z"
+                    fill="#fff"
+                  />
+                </svg>
+                <span class="text-white text-base font-bold">DSA</span>
+              </div>
+              <!-- OOP -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1.5em"
+                  height="1.5em"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="8" cy="12" r="4" fill="#fff" />
+                  <circle cx="16" cy="12" r="4" fill="#fff" />
+                </svg>
+                <span class="text-white text-base font-bold">OOP</span>
+              </div>
+              <!-- Spring Cloud -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="1.5em"
+                  height="1.5em"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M6 19a4 4 0 1 1 0-8h1.26A8 8 0 1 1 20 17.5a3.5 3.5 0 0 1-3.5 3.5H6z"
+                    fill="#fff"
+                  />
+                </svg>
+                <span class="text-white text-base font-bold">Spring Cloud</span>
+              </div>
+              <!-- Hibernate -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-hibernate-plain text-2xl"></i>
+                <span class="text-white text-base font-bold">Hibernate</span>
+              </div>
+              <!-- JPA -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-sqldeveloper-plain text-2xl"></i>
+                <span class="text-white text-base font-bold">JPA</span>
+              </div>
+              <!-- Java -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-java-plain text-2xl"></i>
+                <span class="text-white text-base font-bold">Java</span>
+              </div>
+              <!-- C/C++ -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-cplusplus-plain text-2xl"></i>
+                <span class="text-white text-base font-bold">C/C++</span>
+              </div>
+              <!-- Python -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-python-plain text-2xl"></i>
+                <span class="text-white text-base font-bold">Python</span>
+              </div>
+              <!-- Kafka -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-apachekafka-original text-2xl"></i>
+                <span class="text-white text-base font-bold">Kafka</span>
+              </div>
+              <!-- JavaScript -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-javascript-plain text-2xl"></i>
+                <span class="text-white text-base font-bold">JavaScript</span>
+              </div>
+              <!-- HTML -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-html5-plain text-2xl"></i>
+                <span class="text-white text-base font-bold">HTML</span>
+              </div>
+              <!-- CSS -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-css3-plain text-2xl"></i>
+                <span class="text-white text-base font-bold">CSS</span>
+              </div>
+              <!-- MySQL -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-mysql-original text-2xl"></i>
+                <span class="text-white text-base font-bold">MySQL</span>
+              </div>
+              <!-- ReactJS -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-react-original text-2xl"></i>
+                <span class="text-white text-base font-bold">ReactJS</span>
+              </div>
+              <!-- Postman -->
+              <div
+                class="flex items-center gap-2 border border-[#40484f] bg-[#1e2124] px-2 py-1 rounded-full shadow transition hover:scale-105 hover:shadow-lg min-w-[120px]"
+              >
+                <i class="devicon-postman-plain text-2xl"></i>
+                <span class="text-white text-base font-bold">Postman</span>
+              </div>
+            </div>
+            <hr />
+            <h2
+              class="text-white text-xl sm:text-2xl font-bold leading-tight tracking-[-0.015em] px-2 sm:px-4 pb-3 pt-5"
+              id="projects"
+            >
+              Projects
+            </h2>
+            <!-- Replace the project cards section with the following for a card layout -->
+            <div class="flex flex-col gap-4 overflow-x-auto px-2 sm:px-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Project Card 1 -->
+                <div
+                  class="flex flex-col bg-[#1e2124] rounded-xl shadow-lg border border-[#40484f] overflow-hidden"
+                >
+                  <div
+                    class="w-full bg-center bg-no-repeat aspect-video bg-cover"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBS8lJ0Vdrj3G3A0YFlp2pdHqVP31k0dCGGpTiFrkep00VST_A0U9jgMgJS3vb_sUnha4P_kYwGAvD1LhY_yPeDqDOdcVyA-a6zEFi6epaI45b3BdmS5vvFPZ38xU1PPLRtSTJ-WUB1RNDnRKtc5lGvNFDRhcNs-FopLpJEwzxPR6fUvqfk0xiOsbJ6DoaXugCbEe1QMLdXcSlrd5LhW_Q_YmDCaUbVCRHF4-4qUNF-RpFhPLgmJvP3Ho4sUxgU1cpLyHvPbRJM5A');
+                    "
+                  ></div>
+                  <div class="p-4 flex flex-col gap-2 flex-1">
+                    <p class="text-white text-lg font-bold leading-tight">
+                      E-commerce Platform
+                    </p>
+                    <p
+                      class="text-[#a2abb3] text-sm font-normal leading-normal flex-1"
+                    >
+                      Developed a scalable e-commerce platform with secure
+                      payment gateway integration.
+                    </p>
+                    <a
+                      href="https://github.com/yourusername/ecommerce-platform"
+                      target="_blank"
+                      class="text-center mt-2 inline-block bg-[#dce8f3] text-[#121416] text-sm font-bold rounded-lg px-4 py-2 transition hover:bg-[#b7c9d6]"
+                    >
+                      Source Code
+                    </a>
+                  </div>
+                </div>
+                <!-- Project Card 2 -->
+                <div
+                  class="flex flex-col bg-[#1e2124] rounded-xl shadow-lg border border-[#40484f] overflow-hidden"
+                >
+                  <div
+                    class="w-full bg-center bg-no-repeat aspect-video bg-cover"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwKfArFSugWMl1VNqQEdq28CGvP0whJBtSsNy91QskJBsyBmdBZEYHOKI3e7x6I5WIwGuRBihuhh8SOWRaEsvhbFLcRfKWiveB6yOYmjbiuYCAcJJ9iTM8INBlVulkc7-QZCL25xqF28Ucq5dSaCo7Ehwd1cqG7THHYDwISZ9ZCXr7iOr5s2tKpmsHY79CRgAy0wzvTUNrlFDFEWWP0tLi2mBkC3e-7xPmtDjwrFjH2mTiOpb_ZqxLnsz5qicZY775HG1OzvbhNA');
+                    "
+                  ></div>
+                  <div class="p-4 flex flex-col gap-2 flex-1">
+                    <p class="text-white text-lg font-bold leading-tight">
+                      Mobile Banking App
+                    </p>
+                    <p
+                      class="text-[#a2abb3] text-sm font-normal leading-normal flex-1"
+                    >
+                      Built a mobile banking application with robust security
+                      features and user authentication.
+                    </p>
+                    <a
+                      href="https://github.com/yourusername/mobile-banking-app"
+                      target="_blank"
+                      class="text-center mt-2 inline-block bg-[#dce8f3] text-[#121416] text-sm font-bold rounded-lg px-4 py-2 transition hover:bg-[#b7c9d6]"
+                    >
+                      Source Code
+                    </a>
+                  </div>
+                </div>
+                <!-- Project Card 3 -->
+                <div
+                  class="flex flex-col bg-[#1e2124] rounded-xl shadow-lg border border-[#40484f] overflow-hidden"
+                >
+                  <div
+                    class="w-full bg-center bg-no-repeat aspect-video bg-cover"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD2G2X6HKO1ymfWMfodorCkir3XydG4W9fyxXQVWX_bHo2JAm9ylnyjOLbB18jMS1WJFRdp4lJu5rdeN7vj4z42TtBejOhDdcks2dffSJ1-5c6yKdHSQBtlJzRG_PLh-Er8ht1PiRlxVLLuCOmnCXDRsD_7ffkMGElif2lvcKavvHDe7qf6t2J0wNy_QOqCiCCSnH1oo9k1sUUW5h9BSvC1DKk8QId3LEopWsA8813K1PRMkDfMJZJH2HWitwzfDjH_B_Bf7BD7bw');
+                    "
+                  ></div>
+                  <div class="p-4 flex flex-col gap-2 flex-1">
+                    <p class="text-white text-lg font-bold leading-tight">
+                      Data Analytics Dashboard
+                    </p>
+                    <p
+                      class="text-[#a2abb3] text-sm font-normal leading-normal flex-1"
+                    >
+                      Created a data analytics dashboard for visualizing key
+                      performance indicators.
+                    </p>
+                    <a
+                      href="https://github.com/yourusername/data-analytics-dashboard"
+                      target="_blank"
+                      class="text-center mt-2 inline-block bg-[#dce8f3] text-[#121416] text-sm font-bold rounded-lg px-4 py-2 transition hover:bg-[#b7c9d6]"
+                    >
+                      Source Code
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="mt-4" />
+            <h2
+              class="text-white text-xl sm:text-2xl font-bold leading-tight tracking-[-0.015em] px-2 sm:px-4 pb-3 pt-5"
+              id="contact"
+            >
+              Contact
+            </h2>
+            <form
+              class="flex flex-col gap-4 max-w-full sm:max-w-[480px] px-2 sm:px-4 py-3"
+            >
+              <label class="flex flex-col min-w-40 flex-1">
+                <p class="text-white text-base font-medium leading-normal pb-2">
+                  Your Name
+                </p>
+                <input
+                  placeholder="Enter your name"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-0 border-none bg-[#2c3135] focus:border-none h-14 placeholder:text-[#a2abb3] p-4 text-base font-normal leading-normal"
+                  value=""
+                />
+              </label>
+              <label class="flex flex-col min-w-40 flex-1">
+                <p class="text-white text-base font-medium leading-normal pb-2">
+                  Your Email
+                </p>
+                <input
+                  placeholder="Enter your email"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-0 border-none bg-[#2c3135] focus:border-none h-14 placeholder:text-[#a2abb3] p-4 text-base font-normal leading-normal"
+                  value=""
+                />
+              </label>
+              <label class="flex flex-col min-w-40 flex-1">
+                <p class="text-white text-base font-medium leading-normal pb-2">
+                  Your Message
+                </p>
+                <textarea
+                  placeholder="Enter your message"
+                  class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-white focus:outline-0 focus:ring-0 border-none bg-[#2c3135] focus:border-none min-h-36 placeholder:text-[#a2abb3] p-4 text-base font-normal leading-normal"
+                ></textarea>
+              </label>
+              <div class="flex py-3 justify-start">
+                <button
+                  class="flex min-w-[84px] max-w-full sm:max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#dce8f3] text-[#121416] text-sm font-bold leading-normal tracking-[0.015em]"
+                >
+                  <span class="truncate">Send Message</span>
+                </button>
+              </div>
+            </form>
+            <div class="flex flex-wrap gap-3 px-2 sm:px-4 py-3 justify-start">
+              <button
+                class="flex min-w-[84px] max-w-full sm:max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#2c3135] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate" onclick="window.open('https://www.linkedin.com/in/prashant-patil-f43/', '_blank')">LinkedIn</span>
+              </button>
+              <button
+                class="flex min-w-[84px] max-w-full sm:max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 px-4 bg-[#2c3135] text-white text-sm font-bold leading-normal tracking-[0.015em]"
+              >
+                <span class="truncate" onclick="window.open('https://wa.me/9766031610', '_blank')">WhatsApp</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <footer class="flex justify-center w-full">
+          <div class="flex w-full max-w-[960px] flex-1 flex-col">
+            <footer
+              class="flex flex-col gap-6 px-2 sm:px-5 py-10 text-center @container"
+            >
+              <p class="text-[#a2abb3] text-base font-normal leading-normal">
+                Made with ❤️ by Prashant Patil
+              </p>
+            </footer>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script>
+      // Responsive navbar toggle
+      const navToggle = document.getElementById("nav-toggle");
+      const navMenu = document.getElementById("nav-menu");
+      if (navToggle && navMenu) {
+        navToggle.addEventListener("click", () => {
+          navMenu.classList.toggle("hidden");
+          navMenu.classList.toggle("flex");
+          if (navMenu.classList.contains("hidden")) {
+            navMenu.classList.add("translate-x-full");
+            navMenu.classList.remove("translate-x-0");
+          } else {
+            navMenu.classList.remove("translate-x-full");
+            navMenu.classList.add("translate-x-0");
+          }
+        });
+        // Close menu when clicking outside on mobile
+        navMenu.addEventListener("click", (e) => {
+          if (e.target === navMenu && window.innerWidth < 768) {
+            navMenu.classList.add("hidden");
+            navMenu.classList.remove("flex", "translate-x-0");
+            navMenu.classList.add("translate-x-full");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
