@@ -42,7 +42,6 @@
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.enableZoom = false; // Zoom disable केलं
 
     // Lights
     const light1 = new THREE.DirectionalLight(0xffffff, 1.5);
@@ -363,6 +362,56 @@ legPositions.forEach(pos => {
     const handleMaterial = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.25, metalness: 0.1 });
     const handle = new THREE.Mesh(handleGeometry, handleMaterial);
     scene.add(handle);
+
+    // ============ Books on Desk ============
+    // Book positions (left of keyboard)
+    const bookBaseX = 3;
+    const bookBaseY = 0.66; // on table
+    const bookBaseZ = 0.5;
+    const bookGapY = 0.13;
+    const bookGapZ = 0.18;
+
+    // Book 1 (bottom)
+    const book1 = new THREE.Mesh(
+      new THREE.BoxGeometry(1.1, 0.12, 1.5),
+      new THREE.MeshStandardMaterial({ color: 0x8b0000 }) // dark red
+    );
+    book1.position.set(bookBaseX, bookBaseY, bookBaseZ);
+    scene.add(book1);
+
+    // Book 2 (middle)
+    const book2 = new THREE.Mesh(
+      new THREE.BoxGeometry(1.08, 0.11, 1.38),
+      new THREE.MeshStandardMaterial({ color: 0x006400 }) // dark green
+    );
+    book2.position.set(bookBaseX + 0.06, bookBaseY + bookGapY, bookBaseZ + bookGapZ);
+    scene.add(book2);
+
+    // Book 3 (top, black cover, with text)
+    // Create canvas for cover
+    const coverCanvas = document.createElement('canvas');
+    coverCanvas.width = 256;
+    coverCanvas.height = 128;
+    const coverCtx = coverCanvas.getContext('2d');
+    coverCtx.fillStyle = '#111'; // black cover
+    coverCtx.fillRect(0, 0, 256, 128);
+    coverCtx.font = 'bold 30px sans-serif';
+    coverCtx.fillStyle = '#00aaff'; // blue text
+    coverCtx.textAlign = 'center';
+    coverCtx.textBaseline = 'middle';
+    coverCtx.fillText('C', 128, 44);
+    coverCtx.fillText('Programming', 128, 84);
+    const coverTexture = new THREE.CanvasTexture(coverCanvas);
+    coverTexture.needsUpdate = true;
+    // Materials: top face = coverTexture, others black
+    const bookBlackMat = new THREE.MeshStandardMaterial({ color: 0x111111 });
+    const book3Materials = [bookBlackMat, bookBlackMat, new THREE.MeshBasicMaterial({ map: coverTexture }), bookBlackMat, bookBlackMat, bookBlackMat];
+    const book3 = new THREE.Mesh(
+      new THREE.BoxGeometry(1.05, 0.10, 1.25),
+      book3Materials
+    );
+    book3.position.set(bookBaseX + 0.12, bookBaseY + bookGapY * 2, bookBaseZ + bookGapZ * 2);
+    scene.add(book3);
 
     // ============ 3D Text in Background (Programming Languages, Only Background) ============
     const textMeshes = [];
