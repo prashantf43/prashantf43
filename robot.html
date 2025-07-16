@@ -42,6 +42,7 @@
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
+    controls.enableZoom = false; // Zoom disable केलं
 
     // Lights
     const light1 = new THREE.DirectionalLight(0xffffff, 1.5);
