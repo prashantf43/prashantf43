@@ -42,6 +42,7 @@
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
+    controls.enableZoom = false;
 
     // Lights
     const light1 = new THREE.DirectionalLight(0xffffff, 1.5);
@@ -421,9 +422,9 @@ legPositions.forEach(pos => {
     const fontLoader = new FontLoader();
     fontLoader.load('https://cdn.jsdelivr.net/npm/three@0.155.0/examples/fonts/helvetiker_regular.typeface.json', function(font) {
       const languages = [
-        'C','C++','C#','java','javascript','python','spring boot','react.js','DBMS','MySQL',
-        'PHP','HTML','CSS', 'microservices', 'spring security','JPA', 'OOP','DSA','AI','ML','DS',
-        'Web Development','Web Design','Web Application','Web Service','Web API','Web Framework',
+        'C','C++','C#','java','javascript','python','Spring boot','react.js','DBMS','MySQL',
+        'PHP','HTML','CSS', 'microservices', 'spring security','JPA', 'OOP','DSA','Artificial Intelligence','Machine Learning','Data Science',
+        'Web Development','Web Design','Kafka','Restful API','Web API','PHP',
       ];
       for (let i = 0; i < languages.length; i++) {
         const lang = languages[i];
